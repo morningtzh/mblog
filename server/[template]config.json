@@ -1,4 +1,7 @@
 {
+    "FLASK":{
+        "SALT":"SALT"
+    },
     "BAIDU_AI": {
         "APPID": "APPID",
         "APIKEY": "APIKEY",

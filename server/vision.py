@@ -14,7 +14,7 @@ from funcs.base.config import CONFIG
 import os
 
 app = Flask(__name__, static_url_path='', static_folder="../dist", root_path=os.getcwd())
-app.secret_key = CONFIG["FALSK"]["SALT"]
+app.secret_key = CONFIG["FLASK"]["SALT"]
 api = flask_restful.Api(app)
 
 
