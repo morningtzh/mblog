@@ -1,0 +1,15 @@
+{
+    "BAIDU_AI": {
+        "APPID": "APPID",
+        "APIKEY": "APIKEY",
+        "SECRETKEY": "SECRETKEY"
+    },
+
+    "MONGODB": {
+        "ADDRESS": "mongodb://YOUR.MONGODB.ADDR:PORT/",
+        "DATABASE": "DATABASE_NAME",
+        "AUTH": true,
+        "USERNAME": "USERNAME",
+        "PASSWORD": "PASSWORD"
+    }
+}
