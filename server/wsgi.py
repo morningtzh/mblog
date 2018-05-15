@@ -1,0 +1,1 @@
+from vision import app as application
