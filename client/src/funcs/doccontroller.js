@@ -9,7 +9,7 @@ class DocController {
     getDocuments = action((type = 'all', option = {}, clear = false) => {
 
         //设置查询开始的 index
-        option["start"] = this.newDocuments.length
+        option["start"] = this.newDocuments.length;
 
 
         reqwest({
@@ -53,18 +53,20 @@ class DocController {
     });
 
     //写文章
-    writeDocuments = (doc_type, content, hashtag = [], category = null, share_url = null) => {
+    writeDocuments = (doc_type, content, hashtag, category, share_url) => {
+
+        console.log(doc_type, content, hashtag, category, share_url)
 
         reqwest({
             url: '/doc',
             method: 'post',
             type: 'json',
             data: {
-                doc_type,
-                content,
-                hashtag,
-                category,
-                share_url,
+                doc_type: doc_type,
+                content: content,
+                hashtag: hashtag.join(","),
+                category: category,
+                share_url: share_url,
             }
         })
             .then((data) => {

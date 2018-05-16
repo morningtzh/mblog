@@ -35,7 +35,12 @@ class DocList(flask_restful.Resource):
         """
 
         doc_type = request.args.get("doc_type", "all")
-        option = request.args.get("option", {})
+        start = int(request.args.get("start", "0"))
+
+        print(start, type(start))
+        option = {
+            "start": start
+        }
 
         print(option)
         docs = get_doc_list( doc_type, option)

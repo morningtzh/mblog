@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Modal, Button, Row, Col } from 'antd';
+import { Modal, Button, Row, Col, Card, Tag } from 'antd';
 
 import modalControl from '../../funcs/modalcontroller';
 
-import marked from 'marked'
-import highlight from 'highlight'
-
+import marked from 'marked';
+import highlight from 'highlight';
 
 
 class BlogModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            blog: ""
-        }
+            blog: '',
+        };
     }
 
     componentWillMount() {
@@ -23,8 +22,7 @@ class BlogModal extends Component {
     }
 
     componentDidMount() {
-
-        let blog = marked(modalControl.data.data.content, {
+        const blog = marked(modalControl.data.data.content, {
             renderer: new marked.Renderer(),
             gfm: true,
             pedantic: false,
@@ -33,16 +31,16 @@ class BlogModal extends Component {
             breaks: true,
             smartLists: true,
             smartypants: true,
-            highlight: function (code) {
+            highlight(code) {
                 return highlight.highlightAuto(code).value;
-            }
-        })
+            },
+        });
 
-        console.log(blog, typeof(blog))
+        console.log(blog, typeof (blog));
 
         this.setState({
-            blog:(<div dangerouslySetInnerHTML={{__html:blog}} />)
-        })
+            blog: (<div dangerouslySetInnerHTML={{ __html: blog }}/>),
+        });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -50,7 +48,7 @@ class BlogModal extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return true
+        return true;
     }
 
     componentWillUpdate(nextProps, nextState) {
@@ -74,17 +72,22 @@ class BlogModal extends Component {
                 closable={this.props.closable}
             >
 
-<Row>
-    <Col span={18}>
-        <p>{modalControl.data.data.title}</p>
-        <p>{",".join(modalControl.data.data.hashtag)}</p>
-    </Col>
-    <Col span={6}>
-        <p>modalControl.data.data.write_time </p>
-    </Col>
-</Row>
+                <Row>
+                    <Col span={18}>
+                        <p style={{ fontSize: 35 }}>{modalControl.data.data.title}</p>
+                    </Col>
+                    <Col span={6}>
+                        <p>{modalControl.data.data.write_time} </p>
+                    </Col>
+                </Row>
 
-                {this.state.blog}
+                <Card
+                    hoverable
+                >
+                    {this.state.blog}
+                </Card>
+
+                <p>{modalControl.data.data.hashtag.map(tag => (<Tag color="blue">{tag}</Tag>))}</p>
                 <Button onClick={() => {
                     modalControl.closeModal();
                 }}

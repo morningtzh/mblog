@@ -97,6 +97,16 @@ def get_doc(id=None):
 
     return doc
 
+def get_hashtags():
+
+    return db.docs.distinct("hashtag")
+
+def get_like_num():
+
+    like_num = db.docs.aggregate([{"$group" : {"_id" : "$writer", "like_num" : {"$sum" : "$like_num"}}}])
+
+    return list(like_num)[0].get("like_num", 0)
+
 
 def add_doc(doc_type, content, attachments={}):
     """
@@ -115,7 +125,11 @@ def add_doc(doc_type, content, attachments={}):
     #content_first_break_index = content.find('\n')
 
     print(content)
-    content_first_break_index = re.search(r'\n', content, re.M).span()[0]
+
+    try:
+        content_first_break_index = re.search(r'\n', content).span()[0]
+    except Exception as ex:
+        content_first_break_index = 1
 
     print(content_first_break_index)
 

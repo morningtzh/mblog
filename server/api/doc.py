@@ -48,7 +48,6 @@ class Doc(flask_restful.Resource):
             return {
                 "error": 1,
                 "describe": "找不到你要的博客"
-
             }
 
         return jsonify({
@@ -87,9 +86,11 @@ class Doc(flask_restful.Resource):
 
         doc_type = request.form.get("doc_type")
         content = request.form.get("content")
-        hashtag = request.form.get("hashtag", [])
+        hashtag = request.form.get("hashtag")
         category = request.form.get("category", 'unclassed')
         share_url = request.form.get("share_url")
+
+        hashtag = [] if hashtag == None or hashtag == "" else hashtag.split( "," )
 
         if doc_type not in ['blog', 'moment']:
             errno = 200

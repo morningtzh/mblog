@@ -1,6 +1,7 @@
 from flask import session, request, jsonify
 import flask_restful
 
+from funcs.docs import *
 
 class GlobalData(flask_restful.Resource):
     """
@@ -17,10 +18,9 @@ class GlobalData(flask_restful.Resource):
         global_data = {
             "blogNum": 999,
             "momentNum": 666,
-            "likeNum": 214423,
-            "keywordList": ['wasabi', 'idea', '大傻', '666'],
+            "likeNum": get_like_num(),
             "blogCategoryList": ['111', '222', '333'],
-            "hashtagList": ['#sdf', '#b4rwef', '#bdsvw4', '#444', '#fvdrbv'],
+            "hashtagList": get_hashtags(),
         }
 
         return jsonify({
