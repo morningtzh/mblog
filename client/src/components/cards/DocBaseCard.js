@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Card, Icon, Avatar, Button, Row, Col } from 'antd';
+import { Card, Icon, Avatar, Button, Row, Col, Tag } from 'antd';
 
 import modalControl from '../../funcs/modalcontroller';
 
@@ -28,7 +28,7 @@ class DocBaseCard extends Component {
 
         /* 监听相应卡片的点击事件，弹出 modal */
         document.getElementById(this.props.doc.id).addEventListener('click', (event) => {
-            modalControl.setModal('blog', this.props.doc);
+            modalControl.setModal(this.props.doc.doc_type, this.props.doc);
         }, true);
     }
 
@@ -66,6 +66,8 @@ class DocBaseCard extends Component {
                     }}
                     doc={doc}
                 >
+                    <p>{doc.hashtag.map(tag => (<Tag color="blue">{tag}</Tag>))}</p>
+
                     <Row>
                         <Col span={5}>
                             {doc.post_before}

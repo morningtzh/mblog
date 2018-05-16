@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import BlogModal from './BlogModal';
+import MomentModal from './MomentModal'
 import EditerModal from './EditerModal';
 
 const MODALSELECT = {
     blog: BlogModal,
+    moment: MomentModal,
     editer: EditerModal,
 };
 
