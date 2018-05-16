@@ -113,3 +113,22 @@ class Doc(flask_restful.Resource):
         add_doc(doc_type, content, attachments)
 
         return {'errno': 0, "describe": "发表成功"}
+
+
+    def patch(self):
+        """
+        Patch Doc
+            Use for Get documents list
+
+            request data:
+                id: string
+                type: like|content|
+                data:  
+
+            response data:
+                errno: int
+                describe: string
+            
+        """
+
+        pass

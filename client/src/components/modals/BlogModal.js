@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Modal, Button } from 'antd';
+import { Modal, Button, Row, Col } from 'antd';
 
 import modalControl from '../../funcs/modalcontroller';
 
@@ -24,7 +24,7 @@ class BlogModal extends Component {
 
     componentDidMount() {
 
-        let blog = marked(modalControl.data.data, {
+        let blog = marked(modalControl.data.data.content, {
             renderer: new marked.Renderer(),
             gfm: true,
             pedantic: false,
@@ -73,6 +73,16 @@ class BlogModal extends Component {
                 destroyOnClose={this.props.destroyOnClose}
                 closable={this.props.closable}
             >
+
+<Row>
+    <Col span={18}>
+        <p>{modalControl.data.data.title}</p>
+        <p>{",".join(modalControl.data.data.hashtag)}</p>
+    </Col>
+    <Col span={6}>
+        <p>modalControl.data.data.write_time </p>
+    </Col>
+</Row>
 
                 {this.state.blog}
                 <Button onClick={() => {

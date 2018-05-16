@@ -28,7 +28,7 @@ class DocBaseCard extends Component {
 
         /* 监听相应卡片的点击事件，弹出 modal */
         document.getElementById(this.props.doc.id).addEventListener('click', (event) => {
-            modalControl.setModal('blog', this.props.doc.content);
+            modalControl.setModal('blog', this.props.doc);
         }, true);
     }
 

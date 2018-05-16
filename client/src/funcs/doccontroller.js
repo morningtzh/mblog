@@ -53,7 +53,7 @@ class DocController {
     });
 
     //写文章
-    writeDocuments = (doc_type,content,hashtag=[],category=null,share_url=null) => {
+    writeDocuments = (doc_type, content, hashtag = [], category = null, share_url = null) => {
 
         reqwest({
             url: '/doc',

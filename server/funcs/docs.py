@@ -130,7 +130,7 @@ def add_doc(doc_type, content, attachments={}):
             "share_url": attachments.get("share_url", None),
             "write_time": datetime.datetime.utcnow(),
             "edit_time": datetime.datetime.utcnow(),
-            "summary": content if doc_type == "moment" else re.sub('[\r\n\t]', '', content[
+            "summary": content if doc_type == "moment" else re.sub('[\r\n\t#*]', '', content[
                 content_first_break_index: content_first_break_index + 140
             ]),
             "like_num": 0,
@@ -146,3 +146,7 @@ def add_doc(doc_type, content, attachments={}):
     except IOError as e:
         print("add_doc", e)
         raise Exception("nanana")
+
+def like():
+    pass
+

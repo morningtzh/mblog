@@ -50,7 +50,7 @@ import documents from "../../funcs/doccontroller";
     }
 
     componentDidMount() {
-        documents.getDocuments("all", clear=true);
+        documents.getDocuments("all");
     }
 
     componentWillReceiveProps(nextProps) {

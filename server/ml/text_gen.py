@@ -20,10 +20,12 @@ import random
 import sys
 import io
 
+# read file
 with io.open('xzltq.txt', encoding='utf-8') as f:
     text = f.read().lower()
 print('corpus length:', len(text))
 
+# build char duplexing map. 
 chars = sorted(list(set(text)))
 print('total chars:', len(chars))
 char_indices = dict((c, i) for i, c in enumerate(chars))

@@ -18,7 +18,7 @@ class EditerModal extends Component {
         super(props);
 
         this.state = {
-            textValue: "lalalalal"
+            textValue: "早点写完去睡觉~"
         }
     }
 
