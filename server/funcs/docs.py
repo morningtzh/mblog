@@ -22,7 +22,7 @@ def counttime(timedelta):
         if timedelta.days // 30:
             post_before = str(timedelta.days // 30) + " months ago"
         else:
-            post_before = str(timedelta.days) + " months ago"
+            post_before = str(timedelta.days) + " days ago"
 
     else:
         if timedelta.seconds // 3600:
