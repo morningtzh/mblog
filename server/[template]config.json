@@ -14,5 +14,9 @@
         "AUTH": true,
         "USERNAME": "USERNAME",
         "PASSWORD": "PASSWORD"
+    },
+
+    "USER": {
+        "COMP_FACE": "YOUR BASE64 FACE WITHOUT HEADER LIKE 'data:image/png;base64,' "
     }
 }

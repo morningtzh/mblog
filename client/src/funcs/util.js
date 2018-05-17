@@ -8,6 +8,13 @@ class Util {
         this.getGlobalData()
     }
 
+    LOGIN_STATE = {
+        UNLOGIN: Symbol("UNLOGIN"),
+        LOGINING: Symbol("LOGINING"),
+        FAILD: Symbol("FAILD"),
+        SUCCESS: Symbol("SUCCESS"),
+    };
+
     GLOBAL_DATA = observable({
         blogNum: 0,
         momentNum: 0,
@@ -16,6 +23,8 @@ class Util {
         blogCategoryList: [],
         hashtagList: [],
     });
+
+
 
     getGlobalData = () => {
         console.log("getGlobalData");
@@ -41,6 +50,69 @@ class Util {
                 console.log(`getGlobalData failed ${err}, ${msg}`);
             })
     };
+
+    loginInfo = observable({
+        state: this.LOGIN_STATE.UNLOGIN,
+        times: 0,
+    });
+
+    login = (base64Img) => {
+
+        if(this.LOGIN_STATE === this.loginInfo.state) {
+            return
+        }
+
+        action(() => {
+                this.loginInfo.state= this.LOGIN_STATE.LOGINING;
+        })();
+
+        console.log("login");
+        reqwest({
+            url: '/user',
+            method: 'POST',
+            type: 'json',
+            data: {
+                base64Img:base64Img
+            }
+        })
+            .then((data) => {
+                console.log(`login ${data}`);
+                console.log(`login ${data.errno}`);
+
+                action(() => {
+                    if(data.errno === 0) {
+                        this.loginInfo.state= this.LOGIN_STATE.SUCCESS;
+                    } else if (this.loginInfo.times < 10) {
+                        this.loginInfo.state= this.LOGIN_STATE.LOGINING;
+                        this.loginInfo.times++;
+                    } else {
+                        this.loginInfo.state= this.LOGIN_STATE.FAILD;
+                        this.loginInfo.times = 0;
+                    }
+                })();
+
+                console.log("login",this.loginInfo.state,  this.loginInfo.times)
+            })
+            .fail((err, msg) => {
+                console.log(`getGlobalData failed ${err}, ${msg}`);
+            })
+    };
+
+    stopLogin = () => {
+        action(() => {
+            this.loginInfo.state= this.LOGIN_STATE.UNLOGIN;
+        })();
+        console.log("logout",this.loginInfo.state,  this.loginInfo.times)
+    };
+
+    logout = () => {
+
+        action(() => {
+            this.loginInfo.state= this.LOGIN_STATE.UNLOGIN;
+        })();
+        console.log("logout",this.loginInfo.state,  this.loginInfo.times)
+
+    }
 }
 
 export default new Util()
