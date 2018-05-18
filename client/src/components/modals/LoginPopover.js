@@ -73,7 +73,7 @@ class LoginPopover extends Component {
         if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             // Not adding `{ audio: true }` since we only want video now
             navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-                this.captureInfo.videoDom.src = window.URL.createObjectURL(stream);
+                this.captureInfo.videoDom.srcObject = stream;
                 this.captureInfo.videoDom.play();
             });
         }
@@ -104,7 +104,9 @@ class LoginPopover extends Component {
             text: state ? (<p>登录成功</p>) : (<p>登录失败，请重新尝试</p>),
         });
 
-        util.stopLogin()
+        if (!state) {
+            util.stopLogin()
+        }
     };
 
     listenLoginState = reaction(
