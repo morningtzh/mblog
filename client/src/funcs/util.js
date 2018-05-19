@@ -1,7 +1,7 @@
 "use strict";
 
 import reqwest from 'reqwest';
-import { observable, action, autorun, trace } from 'mobx';
+import { observable, action, autorun, trace, computed } from 'mobx';
 
 class Util {
     constructor() {
@@ -82,12 +82,14 @@ class Util {
                 action(() => {
                     if(data.errno === 0) {
                         this.loginInfo.state= this.LOGIN_STATE.SUCCESS;
-                    } else if (this.loginInfo.times < 10) {
-                        this.loginInfo.state= this.LOGIN_STATE.LOGINING;
-                        this.loginInfo.times++;
                     } else {
-                        this.loginInfo.state= this.LOGIN_STATE.FAILD;
-                        this.loginInfo.times = 0;
+                        if(this.loginInfo.times > 10 && this.loginInfo.state === this.LOGIN_STATE.LOGINING) {
+                            this.loginInfo.state = this.LOGIN_STATE.FAILD;
+                            this.loginInfo.times = 0;
+                        }
+                        else {
+                            this.loginInfo.times++
+                        }
                     }
                 })();
 
@@ -112,6 +114,10 @@ class Util {
         })();
         console.log("logout",this.loginInfo.state,  this.loginInfo.times)
 
+    };
+
+    @computed get ifLogin () {
+        return (this.loginInfo.state === this.LOGIN_STATE.SUCCESS);
     }
 }
 

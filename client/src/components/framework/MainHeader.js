@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Layout, Affix, Row, Col, Button, Input, Icon, Avatar, Popover } from 'antd';
+import { Row, Col, Button, Input, Icon, Avatar, Popover } from 'antd';
 
-import LoginPopover from "../modals/LoginPopover"
+import { observer } from "mobx-react";
+import { autorun, computed, reaction } from "mobx";
+
+import LoginPopover from '../modals/LoginPopover';
 
 import modalControl from '../../funcs/modalcontroller';
+import util from '../../funcs/util';
 
 
 import icon from '../../../public/logo.png';
@@ -13,6 +17,7 @@ import icon from '../../../public/logo.png';
 const Search = Input.Search;
 
 
+@observer
 class MainHeader extends Component {
     constructor(props) {
         super(props);
@@ -61,8 +66,8 @@ class MainHeader extends Component {
                     </Col>
                     <Col span={4}/>
                     <Col span={6} style={{ height: 48 }}>
-                        <Popover content={(<LoginPopover />)} trigger="click" >
-                            <Avatar src={icon} />
+                        <Popover content={(<LoginPopover />)} trigger="click">
+                            <Avatar src={icon}/>
                         </Popover>
                     </Col>
                     <Col span={3} style={{ height: 48 }}>
@@ -72,11 +77,16 @@ class MainHeader extends Component {
                         />
                     </Col>
                     <Col span={5} style={{ height: 48 }}>
-                        <Button onClick={() => {
-                            modalControl.setModal('editer', 'doc');
-                        }}
-                        ><Icon type="edit"/>
-                        </Button>
+                        {
+                            util.ifLogin ?
+
+                                (<Button onClick={() => {
+                                    modalControl.setModal('editer', 'doc');
+                                }}
+                                ><Icon type="edit"/>
+                                </Button>) :
+                                null
+                        }
                     </Col>
                 </Row>
             </div>

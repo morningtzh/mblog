@@ -65,15 +65,15 @@ class EditerModal extends Component {
         const tags = this.state.tags.filter(tag => tag !== removedTag);
         console.log(tags);
         this.setState({ tags });
-    }
+    };
 
     showInput = () => {
         this.setState({ inputVisible: true }, () => this.input.focus());
-    }
+    };
 
     handleInputChange = (e) => {
         this.setState({ inputValue: e.target.value });
-    }
+    };
 
     handleInputConfirm = () => {
         const state = this.state;
@@ -88,12 +88,13 @@ class EditerModal extends Component {
             inputVisible: false,
             inputValue: '',
         });
-    }
+    };
 
     saveInputRef = input => this.input = input;
 
     submit = () => {
-        documents.writeDocuments("blog", this.state.textValue, this.state.tags, "test", null)
+        documents.writeDocuments("blog", this.state.textValue, this.state.tags, "test", null);
+        modalControl.closeModal();
     };
 
     render() {
