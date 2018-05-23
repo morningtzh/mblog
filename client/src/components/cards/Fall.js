@@ -79,7 +79,7 @@ import documents from "../../funcs/doccontroller";
                 {this.cardsDom}
 
                 <Button onClick={() => documents.getDocuments("all")}>
-                    66666
+                    加载更多
                 </Button>
             </div>
         );

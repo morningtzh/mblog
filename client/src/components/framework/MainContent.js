@@ -46,14 +46,17 @@ class MainContent extends Component {
             <div style={{ width: 1200, margin: 'auto' }}>
                 <br/>
                 <Row gutter={8}>
+                    <Col span={3}>
+                        
+                    </Col>
                     <Col span={6}>
                         <UserCard/>
                     </Col>
-                    <Col span={12}>
+                    <Col span={15}>
                         <Fall name="all"/>
                     </Col>
-                    <Col span={6}>
-                        hahaha
+                    <Col span={3}>
+                        
                     </Col>
                 </Row>
 

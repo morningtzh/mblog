@@ -59,10 +59,10 @@ class MainHeader extends Component {
                         <Icon type="home"/>主页
                     </Col>
                     <Col span={2} style={{ height: 48 }}>
-                        杂文
+                        {/* 杂文 */}
                     </Col>
                     <Col span={2} style={{ height: 48 }}>
-                        瞬间
+                        {/* 瞬间 */}
                     </Col>
                     <Col span={4}/>
                     <Col span={6} style={{ height: 48 }}>
@@ -71,10 +71,10 @@ class MainHeader extends Component {
                         </Popover>
                     </Col>
                     <Col span={3} style={{ height: 48 }}>
-                        <Search
+                        {/* <Search
                             placeholder="input search text"
                             onSearch={value => console.log(value)}
-                        />
+                        /> */}
                     </Col>
                     <Col span={5} style={{ height: 48 }}>
                         {
