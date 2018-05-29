@@ -21,4 +21,4 @@ class Mp(flask_restful.Resource):
         print(signature, check_sign)
 
 
-        return {"errno":200}
+        return request.args.get("echostr")
