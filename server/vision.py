@@ -9,6 +9,7 @@ from api.user import User
 from api.globaldata import GlobalData
 from api.doc import Doc
 from api.doclist import DocList
+from api.mp import Mp
 
 from funcs.base.config import CONFIG
 
@@ -36,12 +37,11 @@ def session_check():
 def after_request(response):
     return response
 
-
 api.add_resource(GlobalData, '/globaldata')
 api.add_resource(User, '/user')
 api.add_resource(Doc, '/doc')
 api.add_resource(DocList, '/doclist')
-
+api.add_resource(Mp, '/mp')
 
 @app.route('/')
 def index():
