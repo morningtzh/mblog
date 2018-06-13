@@ -5,20 +5,28 @@ import hashlib
 
 class Mp(flask_restful.Resource):
 
-
     def get(self):
         
-        print(request.args)
-        print(request.args.keys())
+        print("???????????????????")
 
         signature = request.args.get("signature")
         timestamp = request.args.get("timestamp")
         nonce = request.args.get("nonce")
         token = "lalala"
 
-        check_sign = hashlib.sha1("".join([token,timestamp,nonce].sort()))
+        check_list = sorted([token,timestamp,nonce])
 
-        print(signature, check_sign)
+        print(check_list)     
 
+        check_sign = hashlib.sha1("".join(check_list).encode())
 
-        return request.args.get("echostr")
+        print(signature, check_sign.hexdigest())
+
+        if signature == check_sign.hexdigest():
+            echostr = request.args.get("echostr")
+        else:
+            echostr = 0
+
+        return {
+            "echostr": echostr
+        }
