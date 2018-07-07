@@ -29,7 +29,7 @@ class Util {
     getGlobalData = () => {
         console.log("getGlobalData");
         reqwest({
-            url: '/globaldata',
+            url: "/api/globaldata",
             method: 'get',
             type: 'json',
         })
@@ -76,7 +76,7 @@ class Util {
 
         console.log("login");
         reqwest({
-            url: '/user',
+            url: "/api/user",
             method: 'POST',
             type: 'json',
             data: {
@@ -124,7 +124,7 @@ class Util {
         console.log("logout", this.loginInfo.state, this.loginInfo.times)
 
         reqwest({
-            url: '/user',
+            url: "/api/user",
             method: 'POST',
             type: 'json',
             data: {

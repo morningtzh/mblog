@@ -38,10 +38,10 @@ def after_request(response):
     response.set_cookie("Login", str(session.get("login",False)))
     return response
 
-api.add_resource(GlobalData, '/globaldata')
-api.add_resource(User, '/user')
-api.add_resource(Doc, '/doc')
-api.add_resource(DocList, '/doclist')
+api.add_resource(GlobalData, '/api/globaldata')
+api.add_resource(User, '/api/user')
+api.add_resource(Doc, '/api/doc')
+api.add_resource(DocList, '/api/doclist')
 api.add_resource(Mp, '/mp')
 
 @app.route('/')

@@ -12,7 +12,7 @@ class DocController {
         option["start"] = this.newDocuments.length;
 
         reqwest({
-            url: '/doclist',
+            url: '/api/doclist',
             method: 'get',
             type: 'json',
             data: {
@@ -57,7 +57,7 @@ class DocController {
         console.log("writeDocuments", doc_type, content, hashtag, category, share_url)
 
         reqwest({
-            url: '/doc',
+            url: '/api/doc',
             method: 'post',
             type: 'json',
             data: {
@@ -86,7 +86,7 @@ class DocController {
         console.log("editDocuments", id, content, hashtag);
 
         reqwest({
-            url: '/doc',
+            url: '/api/doc',
             method: 'patch',
             type: 'json',
             data: {
