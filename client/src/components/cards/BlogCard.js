@@ -47,15 +47,15 @@ class BlogCard extends Component {
                 {...this.props.cardoption}
             >
 
-                <p>{doc.writer} 写了新文章</p>
+                <p>{doc.writer} 写了文章</p>
                 <Card hoverable>
                     <p style={{fontSize: 20}}>{doc.title}</p>
                     <p>{doc.summary}</p>
                 </Card>
 
                 {
-                    React.Children.map(this.props.children, (child) => {
-                        return <li>{child}</li>;
+                    React.Children.map(this.props.children, (child, index) => {
+                        return <li key={index}>{child}</li>;
                     })
                 }
             </Card>

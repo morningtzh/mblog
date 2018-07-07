@@ -3,6 +3,7 @@
 import reqwest from 'reqwest';
 import { observable, action, autorun, trace, computed } from 'mobx';
 
+
 class Util {
     constructor() {
         this.getGlobalData()
@@ -23,7 +24,6 @@ class Util {
         blogCategoryList: [],
         hashtagList: [],
     });
-
 
 
     getGlobalData = () => {
@@ -56,6 +56,14 @@ class Util {
         times: 0,
     });
 
+    checkLogin = () => {
+        if("True" === this.getCookie("Login")) {
+            action(() => {
+                this.loginInfo.state = this.LOGIN_STATE.SUCCESS
+            })();
+        }
+    };
+
     login = (base64Img) => {
 
         if(this.LOGIN_STATE === this.loginInfo.state) {
@@ -63,7 +71,7 @@ class Util {
         }
 
         action(() => {
-                this.loginInfo.state= this.LOGIN_STATE.LOGINING;
+            this.loginInfo.state = this.LOGIN_STATE.LOGINING;
         })();
 
         console.log("login");
@@ -72,7 +80,8 @@ class Util {
             method: 'POST',
             type: 'json',
             data: {
-                base64Img:base64Img
+                logtype: "login",
+                base64Img: base64Img
             }
         })
             .then((data) => {
@@ -81,7 +90,7 @@ class Util {
 
                 action(() => {
                     if(data.errno === 0) {
-                        this.loginInfo.state= this.LOGIN_STATE.SUCCESS;
+                        this.loginInfo.state = this.LOGIN_STATE.SUCCESS;
                     } else {
                         if(this.loginInfo.times > 10 && this.loginInfo.state === this.LOGIN_STATE.LOGINING) {
                             this.loginInfo.state = this.LOGIN_STATE.FAILD;
@@ -93,31 +102,67 @@ class Util {
                     }
                 })();
 
-                console.log("login",this.loginInfo.state,  this.loginInfo.times)
+                console.log("login", this.loginInfo.state, this.loginInfo.times)
             })
             .fail((err, msg) => {
-                console.log(`getGlobalData failed ${err}, ${msg}`);
+                console.log(`login failed ${err}, ${msg}`);
             })
     };
 
     stopLogin = () => {
         action(() => {
-            this.loginInfo.state= this.LOGIN_STATE.UNLOGIN;
+            this.loginInfo.state = this.LOGIN_STATE.UNLOGIN;
         })();
-        console.log("logout",this.loginInfo.state,  this.loginInfo.times)
+        console.log("logout", this.loginInfo.state, this.loginInfo.times)
     };
 
     logout = () => {
 
         action(() => {
-            this.loginInfo.state= this.LOGIN_STATE.UNLOGIN;
+            this.loginInfo.state = this.LOGIN_STATE.UNLOGIN;
         })();
-        console.log("logout",this.loginInfo.state,  this.loginInfo.times)
+        console.log("logout", this.loginInfo.state, this.loginInfo.times)
+
+        reqwest({
+            url: '/user',
+            method: 'POST',
+            type: 'json',
+            data: {
+                logtype: "logout"
+            }
+        })
+            .then((data) => {
+                console.log(`logout ${data}`);
+                console.log(`logout ${data.errno}`);
+
+
+            })
+            .fail((err, msg) => {
+                console.log(`logout failed ${err}, ${msg}`);
+            })
 
     };
 
-    @computed get ifLogin () {
+    @computed get ifLogin() {
+
         return (this.loginInfo.state === this.LOGIN_STATE.SUCCESS);
+    }
+
+    setCookie = (cname, cvalue, exdays) => {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toGMTString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+    };
+
+    getCookie = (cname) => {
+        let name = cname + "=";
+        let ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            const c = ca[i].trim();
+            if(0 === c.indexOf(name)) return c.substring(name.length, c.length);
+        }
+        return "";
     }
 }
 

@@ -3,12 +3,18 @@ import PropTypes from 'prop-types';
 
 import { Modal, Button, Row, Col, Card, Tag } from 'antd';
 
+import { observer } from "mobx-react";
+import { autorun, computed, reaction } from "mobx";
+
 import modalControl from '../../funcs/modalcontroller';
 
 import marked from 'marked';
 import highlight from 'highlight';
 
+import TagGroup from "../base/TagGroup"
+import util from "../../funcs/util";
 
+@observer
 class BlogModal extends Component {
     constructor(props) {
         super(props);
@@ -64,6 +70,9 @@ class BlogModal extends Component {
     }
 
     render() {
+
+        const doc = modalControl.data.data;
+
         return (
             <Modal
                 visible={this.props.visible}
@@ -74,10 +83,10 @@ class BlogModal extends Component {
 
                 <Row>
                     <Col span={18}>
-                        <p style={{ fontSize: 35 }}>{modalControl.data.data.title}</p>
+                        <p style={{ fontSize: 35 }}>{doc.title}</p>
                     </Col>
                     <Col span={6}>
-                        <p>{modalControl.data.data.write_time} </p>
+                        <p>{doc.write_time} </p>
                     </Col>
                 </Row>
 
@@ -87,7 +96,16 @@ class BlogModal extends Component {
                     {this.state.blog}
                 </Card>
 
-                <p>{modalControl.data.data.hashtag.map(tag => (<Tag color="blue">{tag}</Tag>))}</p>
+                <TagGroup
+                    value={doc.hashtag.slice()}
+                />
+
+                {util.ifLogin && (<Button onClick={() => {
+                    modalControl.setModal('editer', doc);
+                }}
+                >修改
+                </Button>)}
+
                 <Button onClick={() => {
                     modalControl.closeModal();
                 }}

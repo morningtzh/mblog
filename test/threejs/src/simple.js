@@ -1,7 +1,10 @@
 import React from 'react';
 import React3 from 'react-three-renderer';
 import * as THREE from 'three';
-import ReactDOM from 'react-dom';
+
+import MC from "./baseconfig";
+import grass from "../public/textures/blocks/grass_top.png"
+
 
 class Simple extends React.Component {
     constructor(props, context) {
@@ -20,65 +23,38 @@ class Simple extends React.Component {
         this._onAnimate = () => {
             // we will get this callback every frame
 
-            // pretend cubeRotation is immutable.
-            // this helps with updates and pure rendering.
-            // React will be sure that the rotation has now updated.
-            if(Math.abs(this.state.cameraPosition.x) > 3) {
-                this.direction = 0 - this.direction;
-            }
 
-            this.setState({
-                cubeRotation: new THREE.Euler(
-                    this.state.cubeRotation.x + 0.1,
-                    this.state.cubeRotation.y + 0.1,
-                    0,
-                ),
-                cameraPosition: new THREE.Vector3(
-                    this.state.cameraPosition.x + (0.1 * this.direction),
-                    this.state.cameraPosition.y + (0.1 * this.direction),
-                    this.state.cameraPosition.z,
-                ),
-            });
         };
 
-        const len = 100;
-        this.a = [
-            [len, len, 0],
-            [len, -len, 0],
-            [len, 0, len],
-            [len, 0, -len],
-            [-len, len, 0],
-            [-len, -len, 0],
-            [-len, 0, len],
-            [-len, 0, -len],
-            [0, len, len],
-            [0, len, -len],
-            [0, -len, len],
-            [0, -len, -len],
-        ];
     }
 
     render() {
         const width = window.innerWidth; // canvas width
         const height = window.innerHeight; // canvas height
 
-        const boxs = this.a.map((position, index) => {
+        const cameraPosition = new THREE.Vector3(...this.props.cameraPosition);
+
+        const lookAt = new THREE.Euler(...this.props.cameraLookAt);
+
+        const boxs = this.props.blocks.map((position, index) => {
             return (
                 < mesh
                     key={index}
                     position={new THREE.Vector3(...position)}
                 >
                     <boxGeometry
-                        width={10}
-                        height={10}
-                        depth={10}
+                        width={MC.MC_BLOCKSIZE}
+                        height={MC.MC_BLOCKSIZE}
+                        depth={MC.MC_BLOCKSIZE}
                     />
-                    <meshBasicMaterial
-                        color={0x333333}
+                    <meshLambertMaterial
+                        color={0x292D06}
                     />
                 </mesh>
             );
         });
+
+        const d=20;
 
         return (
             <React3
@@ -86,6 +62,7 @@ class Simple extends React.Component {
                 width={width}
                 height={height}
                 onAnimate={this._onAnimate}
+                clearColor={0x6BCAFA}
             >
                 <scene>
                     <perspectiveCamera
@@ -94,18 +71,14 @@ class Simple extends React.Component {
                         aspect={width / height}
                         near={0.1}
                         far={400}
-
-                        position={this.state.cameraPosition}
+                        position={cameraPosition}
+                        rotation={lookAt}
                     />
-                    <object3d>
-                        <pointLight
-                            position={new THREE.Vector3(0, 0, 0)}
-                            color="0x0000ff"
-                        />
-                        {boxs}
-                    </object3d>
+                    <ambientLight
+                        color={0xCCCCCC}
+                    />
 
-
+                    {boxs}
 
                 </scene>
             </React3>
@@ -113,4 +86,4 @@ class Simple extends React.Component {
     }
 }
 
-ReactDOM.render(<Simple/>, document.body);
+export default Simple;

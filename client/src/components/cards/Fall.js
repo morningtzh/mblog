@@ -7,8 +7,10 @@ import {autorun, computed} from "mobx";
 import {Card, Button} from "antd";
 
 import DocBaseCard from "../cards/DocBaseCard"
+import MomentEditCard from "../cards/MomentEditCard"
 
 import documents from "../../funcs/doccontroller";
+import util from "../../funcs/util"
 
 @observer class BaseFall extends Component {
     constructor(props) {
@@ -33,7 +35,9 @@ import documents from "../../funcs/doccontroller";
 
                 /* 通过 DocBaseCard 去生成不同类别的卡片 */
                 cardsDomJsx.push(
-                    <DocBaseCard doc={doc} />
+                    <div key={doc.id}>
+                        <DocBaseCard doc={doc} />
+                    </div>
                 );
             }
 
@@ -50,6 +54,8 @@ import documents from "../../funcs/doccontroller";
     }
 
     componentDidMount() {
+
+
         documents.getDocuments("all");
     }
 
@@ -76,6 +82,8 @@ import documents from "../../funcs/doccontroller";
     render() {
         return (
             <div>
+                {util.ifLogin && <MomentEditCard/>}
+
                 {this.cardsDom}
 
                 <Button onClick={() => documents.getDocuments("all")}>

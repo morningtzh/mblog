@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 import BlogModal from './BlogModal';
 import MomentModal from './MomentModal'
-import EditerModal from './EditerModal';
+import BlogEditerModal from './BlogEditerModal';
 
 const MODALSELECT = {
     blog: BlogModal,
     moment: MomentModal,
-    editer: EditerModal,
+    editer: BlogEditerModal,
 };
 
 
@@ -30,7 +30,7 @@ class BaseModel extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-
+        return true;
     }
 
     componentWillUpdate(nextProps, nextState) {

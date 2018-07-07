@@ -72,6 +72,12 @@ class Doc(flask_restful.Resource):
                 describe
         """
 
+        if session.get("login",False) is not True:
+            return {
+                "errno": 699,
+                "describe": "需要登录"
+            }
+
         errno = 0
         describe = "ok"
         print(request.form)
@@ -132,4 +138,20 @@ class Doc(flask_restful.Resource):
             
         """
 
-        pass
+        if session.get("login",False) is not True:
+            return {
+                "errno": 699,
+                "describe": "需要登录"
+            }
+
+        id = request.form.get("id")
+        content = request.form.get("content")
+        hashtag = request.form.get("hashtag")
+
+        hashtag = [] if hashtag == None or hashtag == "" else hashtag.split( "," )
+        if isinstance(hashtag, str):
+            hashtag = json.loads(hashtag)
+
+        edit_doc(id, content, hashtag)
+
+        return {"errno":0}

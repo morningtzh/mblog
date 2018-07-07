@@ -11,7 +11,6 @@ class DocController {
         //设置查询开始的 index
         option["start"] = this.newDocuments.length;
 
-
         reqwest({
             url: '/doclist',
             method: 'get',
@@ -55,7 +54,7 @@ class DocController {
     //写文章
     writeDocuments = (doc_type, content, hashtag, category, share_url) => {
 
-        console.log(doc_type, content, hashtag, category, share_url)
+        console.log("writeDocuments", doc_type, content, hashtag, category, share_url)
 
         reqwest({
             url: '/doc',
@@ -70,18 +69,48 @@ class DocController {
             }
         })
             .then((data) => {
-                console.log(`writeDocuments ${data} ${data.errno}`);
+                console.log(`writeDocuments resp ${data} ${data.errno}`);
+
+                this.clearDocuments();
+                this.getDocuments()
 
             })
             .fail((err, msg) => {
                 console.log(`writeDocuments failed ${err}, ${msg}`);
             })
-    }
+    };
+
+    //修改文章
+    editDocuments = (id, content, hashtag) => {
+
+        console.log("editDocuments", id, content, hashtag);
+
+        reqwest({
+            url: '/doc',
+            method: 'patch',
+            type: 'json',
+            data: {
+                id,
+                content: content,
+                hashtag: hashtag.join(","),
+            }
+        })
+            .then((data) => {
+                console.log(`editDocuments resp ${data} ${data.errno}`);
+
+                this.clearDocuments();
+                this.getDocuments()
+
+            })
+            .fail((err, msg) => {
+                console.log(`editDocuments failed ${err}, ${msg}`);
+            })
+    };
 
     //清除已 load 文章
     clearDocuments = () => {
         this.documents = [];
-        this.newDocuments = []
+        this.newDocuments.splice(0,999);
     }
 }
 

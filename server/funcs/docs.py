@@ -161,6 +161,36 @@ def add_doc(doc_type, content, attachments={}):
         print("add_doc", e)
         raise Exception("nanana")
 
+def edit_doc(id, content, hashtag):
+
+    try:
+        content_first_break_index = re.search(r'\n', content).span()[0]
+    except Exception as ex:
+        content_first_break_index = 1
+
+    print(content_first_break_index)
+
+    try:
+        doc = {
+            "title": content[0:content_first_break_index],
+            "content": content,
+            "hashtag": hashtag,
+            "edit_time": datetime.datetime.utcnow(),
+            "summary": re.sub('[\r\n\t#*]', '', content[
+                content_first_break_index: content_first_break_index + 140
+            ])
+        }
+
+        print(doc)
+
+        r = db.docs.update_one({"_id":ObjectId(id)},{"$set":doc})
+        if r.modified_count != 1:
+            print("editDoc error", r)
+
+    except IOError as e:
+        print("edit_doc", e)
+        raise Exception("nanana")
+
 def like():
     pass
 

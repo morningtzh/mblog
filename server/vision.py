@@ -26,15 +26,16 @@ def session_check():
 
     print(session)
 
-    # if session.get("ip", 'noip') != request.remote_addr:
-    #     session.clear()
-    #     session["ip"] = request.remote_addr
+    if session.get("ip", 'noip') != request.remote_addr:
+        session.clear()
+        session["ip"] = request.remote_addr
 
-    #     return redirect('/index.html')
+        return redirect('/index.html')
 
 
 @app.after_request
 def after_request(response):
+    response.set_cookie("Login", str(session.get("login",False)))
     return response
 
 api.add_resource(GlobalData, '/globaldata')

@@ -81,7 +81,7 @@ class MainHeader extends Component {
                             util.ifLogin ?
 
                                 (<Button onClick={() => {
-                                    modalControl.setModal('editer', 'doc');
+                                    modalControl.setModal('editer', null);
                                 }}
                                 ><Icon type="edit"/>
                                 </Button>) :

@@ -51,8 +51,8 @@ class MomentCard extends Component {
                 <p>{doc.content}</p>
 
                 {
-                    React.Children.map(this.props.children, (child) => {
-                        return <li>{child}</li>;
+                    React.Children.map(this.props.children, (child, index) => {
+                        return <li key={index}>{child}</li>;
                     })
                 }
             </Card>

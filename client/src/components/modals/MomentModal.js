@@ -7,6 +7,7 @@ import DocBaseCard from "../cards/DocBaseCard";
 
 import modalControl from '../../funcs/modalcontroller';
 
+import TagGroup from "../base/TagGroup"
 
 
 
@@ -60,8 +61,9 @@ class MomentModal extends Component {
 
                 <p>{doc.writer} 说</p>
                 <p>{doc.content}</p>
-                <p>{doc.hashtag.map(tag => (<Tag color="blue">{tag}</Tag>))}</p>
-
+                <TagGroup 
+                        value={doc.hashtag.slice()} 
+                        />
                 <Row>
                     <Col span={5}>
                         {doc.post_before}

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Card, Icon, Avatar, Button, Row, Col, Tag } from 'antd';
+import { Card, Icon, Row, Col } from 'antd';
 
 import modalControl from '../../funcs/modalcontroller';
+import TagGroup from "../base/TagGroup"
 
 import BlogCard from './BlogCard';
 import MomentCard from './MomentCard';
@@ -25,9 +26,8 @@ class DocBaseCard extends Component {
     }
 
     componentDidMount() {
-
         /* 监听相应卡片的点击事件，弹出 modal */
-        document.getElementById(this.props.doc.id).addEventListener('click', (event) => {
+        document.getElementById(`DocId_${this.props.doc.id}`).addEventListener('click', (event) => {
             modalControl.setModal(this.props.doc.doc_type, this.props.doc);
         }, true);
     }
@@ -53,21 +53,22 @@ class DocBaseCard extends Component {
     }
 
     render() {
-        console.log("basecard", this.props.doc)
+        console.log("basecard", this.props.doc);
         const SelectedCard = DOCCARDSELECT[this.props.doc.doc_type];
 
         let doc = this.props.doc;
 
         return (
-            <div id={doc.id}>
+            <div id={`DocId_${doc.id}`}>
                 <SelectedCard
                     cardoption={{
                         hoverable: true,
                     }}
                     doc={doc}
                 >
-                    <p>{doc.hashtag.map(tag => (<Tag color="blue">{tag}</Tag>))}</p>
-
+                    <TagGroup 
+                        value={doc.hashtag.slice()} 
+                    />
                     <Row>
                         <Col span={5}>
                             {doc.post_before}

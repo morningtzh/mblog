@@ -49,25 +49,32 @@ class User(flask_restful.Resource):
         Login
             Use for Login
         '''
+        logtype = request.form.get("logtype")
 
-        img_base64 = request.form.get("base64Img")
+        errno = 0
 
-        result = client.match([
-            {
-                'image': img_base64,
-                'image_type': 'BASE64',
-            },
-            {
-                'image': CONFIG["USER"]["COMP_FACE"],
-                'image_type': 'BASE64',
-            }
-        ])
+        if "login" == logtype:
+            img_base64 = request.form.get("base64Img")
 
-        print(result, type(result))
+            result = client.match([
+                {
+                    'image': img_base64,
+                    'image_type': 'BASE64',
+                },
+                {
+                    'image': CONFIG["USER"]["COMP_FACE"],
+                    'image_type': 'BASE64',
+                }
+            ])
 
-        if 0 == result["error_code"] and result["result"]["score"] > 80:
-            errno = 0
+            print(result, type(result))
+
+            if 0 == result["error_code"] and result["result"]["score"] > 80:
+                errno = 0
+                session["login"]=True
+            else:
+                errno = 200     
         else:
-            errno = 200        
+            session["login"] = False
 
         return {"errno": errno}
